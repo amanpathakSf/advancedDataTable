@@ -1,0 +1,47 @@
+<!--
+    Author: Aman Pathak /Abdul Quadir Kotwala / Ashish Singh
+    Date: 9th March 2025
+    Company: Salesforce
+    Copyright (c) 2025 Salesforce. All rights reserved.
+    -->
+<template>
+    <div class="topContainer">
+        <div class="slds-var-m-left_x-small inputSearch" >
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                <lightning-icon size="x-small"
+                    class="iconMargin slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                    icon-name="utility:search"></lightning-icon>
+                <lightning-input name="enter-search" type="text" label="Search" variant="label-hidden"
+                    onchange={handleSearchKeyChange} onkeypress={handelSearchKey} value={searchValue}
+                    placeholder={searchBoxPlaceHolder} onpaste={handleSearchTextPaste}> </lightning-input>
+            </div>
+        </div>
+        <div class="slds-var-m-right_small slds-var-m-left_small">
+            <lightning-button variant="brand" label="Search" title="Search" onclick={handleSearch}></lightning-button>
+        </div>
+    </div><br />
+
+    <lightning-tabset active-tab-value="search" variant="standard">
+
+        <lightning-tab label="Selected">
+            <div class={tableContainerClass}>
+                <lightning-datatable lwc:if={selectedData} key-field="Id" data-name="readOnly" columns={columns}
+                    data={selectedDataToShow} resize-step="10" row-number-offset="0" show-row-number-column
+                    onsort={handleShowSelectedTableSort} sorted-by={sortedBy} sorted-direction={sortedDirection} enable-infinite-loading={isReadonlyLoading}
+                    onloadmore={handleReadonlyLoadMore} hide-checkbox-column wrap-table-header ></lightning-datatable>
+            </div>
+        </lightning-tab>
+        <lightning-tab value="search" label="Available">
+            <div class={tableContainerClass}>
+                <lightning-datatable lwc:if={tableData} key-field="Id" data-name="available" columns={columns}
+                    data={dataToShow} resize-step="10" row-number-offset="0" onrowselection={handleRowSelection}
+                    selected-rows={selectedRowsArray} onloadmore={handleLoadMore}
+                    enable-infinite-loading={isLazyLoading} sorted-by={sortedBy} sorted-direction={sortedDirection}
+                    onsort={handleSort}></lightning-datatable>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+    <template if:true={isNoData}>
+        <p class="slds-m-around_medium"> No Data available</p>
+    </template>
+</template>

@@ -1,0 +1,23 @@
+<template>
+
+
+    <lightning-card icon-name="standard:account" variant="base">
+      <div slot="title">
+          Account Search
+      </div>
+
+     <!--- <div slot="footer">
+    
+      </div>-->
+      <div>
+        <div if:true={isLoading} class="slds-is-fixed slds-spinner_container">
+            <lightning-spinner alternative-text="loading..." variant="brand"></lightning-spinner>
+          </div>
+      </div>
+
+       <c-advanced-data-table lwc:ref="dataTableAdvanced" columns={accountColumns} table-data={accounts} onrowselection={handleSelection}
+       searchable-fields={searchableFields} >
+
+       </c-advanced-data-table>
+    </lightning-card>
+</template>
